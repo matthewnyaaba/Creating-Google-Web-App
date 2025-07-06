@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post-Session Feedback Survey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #FF6B35, #F7931E);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .form-content {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #FF6B35;
+            box-shadow: 0 0 10px rgba(255, 107, 53, 0.2);
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .rating-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .rating-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 120px;
+        }
+
+        .rating-item input[type="radio"] {
+            width: auto;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #FF6B35, #F7931E);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .section-title {
+            color: #333;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #FF6B35;
+        }
+
+        .required {
+            color: #FF6B35;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .form-content {
+                padding: 20px;
+            }
+            
+            .rating-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Post-Session Feedback</h1>
+            <p>3-Day Prompt Mastery Webinar Series</p>
+            <p>GENAI-ERA | Your feedback helps us improve!</p>
+        </div>
+
+        <div class="form-content">
+            <form id="feedbackForm">
+                <!-- Personal Information -->
+                <div class="form-group">
+                    <label for="name">Full Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="country">Country <span class="required">*</span></label>
+                    <input type="text" id="country" name="country" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="session">Which session did you attend? <span class="required">*</span></label>
+                    <select id="session" name="session" required>
+                        <option value="">Select Session</option>
+                        <option value="day1">Day 1 - Prompt Fundamentals</option>
+                        <option value="day2">Day 2 - Advanced Techniques</option>
+                        <option value="day3">Day 3 - Mastery & Applications</option>
+                        <option value="all">All Three Days</option>
+                    </select>
+                </div>
+
+                <!-- Rating Section -->
+                <h3 class="section-title">Session Evaluation</h3>
+
+                <div class="form-group">
+                    <label>Overall session rating <span class="required">*</span></label>
+                    <div class="rating-group">
+                        <div class="rating-item">
+                            <input type="radio" id="rating5" name="overall_rating" value="5" required>
+                            <label for="rating5">⭐⭐⭐⭐⭐ Excellent</label>
+                        </div>
+                        <div class="rating-item">
+                            <input type="radio" id="rating4" name="overall_rating" value="4">
+                            <label for="rating4">⭐⭐⭐⭐ Good</label>
+                        </div>
+                        <div class="rating-item">
+                            <input type="radio" id="rating3" name="overall_rating" value="3">
+                            <label for="rating3">⭐⭐⭐ Average</label>
+                        </div>
+                        <div class="rating-item">
+                            <input type="radio" id="rating2" name="overall_rating" value="2">
+                            <label for="rating2">⭐⭐ Below Average</label>
+                        </div>
+                        <div class="rating-item">
+                            <input type="radio" id="rating1" name="overall_rating" value="1">
+                            <label for="rating1">⭐ Poor</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Content Quality <span class="required">*</span></label>
+                    <div class="rating-group">
+                        <div class="rating-item">
+                            <input type="radio" id="content5" name="content_rating" value="5" required>
+                            <label for="content5">⭐⭐⭐⭐⭐ Excellent</label>
+                        </div>
+                        <div class="rating-item">
+                            <input type="radio" id="content4" name="content_rating" value="4">
+                            <label for="content4">⭐⭐⭐⭐ Good</label>
+                        </div>
+                        <div class="rating-item">
+                            <input type="radio" id="content3" name="content_rating" value="3">
+                            <label for="content3">⭐⭐⭐ Average</label>
+                        </div>
+                        <div class="rating-item">
+                            <input type="radio" id="content2" name="content_rating" value="2">
+                            <label for="content2">⭐⭐ Below Average</label>
+                        </div>
+                        <div class="rating-item">
+                            <input type="radio" id="content1" name="content_rating" value="1">
+                            <label for="content1">⭐ Poor</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Facilitator Performance <span class="required">*</span></label>
+                    <div class="rating-group">
+                        <div class="rating-item">
+                            <input type="radio" id="facilitator5" name="facilitator_rating" value="5" required>
+                            <label for="facilitator5">⭐⭐⭐⭐⭐ Excellent</label>
+                        </div>
+                        <div class="rating-item">
+                            <input type="radio" id="facilitator4" name="facilitator_rating" value="4">
+                            <label for="facilitator4">⭐⭐⭐⭐ Good</label>
+                        </div>
+                        <div class="rating-item">
+                            <input type="radio" id="facilitator3" name="facilitator_rating" value="3">
+                            <label for="facilitator3">⭐⭐⭐ Average</label>
+                        </div>
+                        <div class="rating-item">
+                            <input type="radio" id="facilitator2" name="facilitator_rating" value="2">
+                            <label for="facilitator2">⭐⭐ Below Average</label>
+                        </div>
+                        <div class="rating-item">
+                            <input type="radio" id="facilitator1" name="facilitator_rating" value="1">
+                            <label for="facilitator1">⭐ Poor</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Learning Outcomes -->
+                <h3 class="section-title">Learning Outcomes</h3>
+
+                <div class="form-group">
+                    <label>What did you find most valuable about this session? <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="practical" name="valuable[]" value="practical">
+                            <label for="practical">Practical techniques</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="examples" name="valuable[]" value="examples">
+                            <label for="examples">Real-world examples</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="interaction" name="valuable[]" value="interaction">
+                            <label for="interaction">Interactive elements</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="qa" name="valuable[]" value="qa">
+                            <label for="qa">Q&A sessions</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="resources" name="valuable[]" value="resources">
+                            <label for="resources">Additional resources</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="networking" name="valuable[]" value="networking">
+                            <label for="networking">Networking opportunities</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="learning_objectives">Did the session meet your learning objectives? <span class="required">*</span></label>
+                    <select id="learning_objectives" name="learning_objectives" required>
+                        <option value="">Select an option</option>
+                        <option value="exceeded">Exceeded expectations</option>
+                        <option value="met">Met expectations</option>
+                        <option value="partially">Partially met expectations</option>
+                        <option value="not_met">Did not meet expectations</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="apply_learning">How confident are you in applying what you learned? <span class="required">*</span></label>
+                    <select id="apply_learning" name="apply_learning" required>
+                        <option value="">Select confidence level</option>
+                        <option value="very_confident">Very confident</option>
+                        <option value="confident">Confident</option>
+                        <option value="somewhat_confident">Somewhat confident</option>
+                        <option value="not_confident">Not confident</option>
+                    </select>
+                </div>
+
+                <!-- Feedback -->
+                <h3 class="section-title">Your Feedback</h3>
+
+                <div class="form-group">
+                    <label for="liked_most">What did you like most about the session?</label>
+                    <textarea id="liked_most" name="liked_most" placeholder="Please share what you enjoyed most..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="improvements">What could be improved?</label>
+                    <textarea id="improvements" name="improvements" placeholder="Please share your suggestions for improvement..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="recommend">Would you recommend this webinar to others? <span class="required">*</span></label>
+                    <select id="recommend" name="recommend" required>
+                        <option value="">Select an option</option>
+                        <option value="definitely">Definitely yes</option>
+                        <option value="probably">Probably yes</option>
+                        <option value="maybe">Maybe</option>
+                        <option value="probably_not">Probably not</option>
+                        <option value="definitely_not">Definitely not</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="future_topics">What topics would you like to see in future webinars?</label>
+                    <textarea id="future_topics" name="future_topics" placeholder="Please suggest topics for future sessions..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="additional_comments">Additional Comments</label>
+                    <textarea id="additional_comments" name="additional_comments" placeholder="Any other feedback or comments..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Feedback</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzbyY6VC9yuH5S-3pJLkCaSj_8EpxFvDn8wR50uQPFKUUFm1jrGY-fwuiASnzdajzCQ-g/exec';
+        
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
+            
+            // Collect form data
+            const formData = new FormData(this);
+            const data = {};
+            
+            // Handle regular fields
+            for (let [key, value] of formData.entries()) {
+                if (key.endsWith('[]')) {
+                    // Handle checkbox arrays
+                    const cleanKey = key.slice(0, -2);
+                    if (!data[cleanKey]) {
+                        data[cleanKey] = [];
+                    }
+                    data[cleanKey].push(value);
+                } else {
+                    data[key] = value;
+                }
+            }
+            
+            // Send data to Google Sheets
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'data=' + encodeURIComponent(JSON.stringify(data))
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.result === 'success') {
+                    alert('✅ Thank you for your feedback!\n\nYour responses have been saved to Google Sheets.\n\nWe appreciate your participation in the Prompt Mastery Webinar Series.');
+                    this.reset();
+                } else {
+                    throw new Error(result.message || 'Unknown error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('❌ Sorry, there was an error submitting your feedback.\n\nPlease try again or contact support.\n\nError: ' + error.message);
+            })
+            .finally(() => {
+                // Reset button
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
